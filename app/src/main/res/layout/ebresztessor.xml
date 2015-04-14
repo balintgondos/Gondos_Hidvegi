@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/hatter"
+    android:layout_centerInParent="true"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <ImageView
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:src="@drawable/a"
+        android:id="@+id/AorM"
+      />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/AorM"
+        android:textSize="30dp"
+        android:paddingLeft="20dp"
+        android:text=":"
+        android:id="@+id/kivalasztott"
+        />
+
+
+
+                  <TextView
+                      android:layout_toRightOf="@+id/AorM"
+                      android:paddingLeft="10dp"
+                      android:textSize="50dp"
+                      android:id="@+id/H"
+                      android:text="H"
+                      android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"/>
+
+                  <TextView
+                      android:textSize="50dp"
+                      android:id="@+id/K"
+                      android:layout_toRightOf="@+id/H"
+                      android:text="K"
+                      android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"/>
+
+                  <TextView
+                      android:textSize="50dp"
+                      android:id="@+id/SZ"
+                      android:layout_toRightOf="@+id/K"
+                      android:text="SZ"
+                      android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"/>
+
+                  <TextView
+                      android:textSize="50dp"
+                      android:id="@+id/CS"
+                      android:layout_toRightOf="@+id/SZ"
+                      android:text="CS"
+                      android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"/>
+
+                  <TextView
+                      android:textSize="50dp"
+                      android:layout_toRightOf="@+id/CS"
+                      android:id="@+id/P"
+                      android:text="P"
+                      android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"/>
+
+
+
+                  <TextView
+                      android:layout_toRightOf="@+id/kivalasztott"
+                      android:paddingLeft="10dp"
+                      android:textSize="30dp"
+                      android:layout_below="@+id/H"
+                      android:id="@+id/ebresztesideje"
+                      android:text="Ébresztes ideje"
+                      android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      />
+
+
+</RelativeLayout>
+
