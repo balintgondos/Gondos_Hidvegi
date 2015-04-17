@@ -1,7 +1,11 @@
 package hu.uniobuda.nik.gondos_hidvegi;
 
 
+import android.app.Activity;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.app.ListActivity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
@@ -17,66 +21,63 @@ import android.widget.AdapterView;
 import java.util.ArrayList;
 
 
-public class MainActivity extends ListActivity {
-
-   // private ListView lv;
-    EbresztesAdapter ebresztesAdapter;
-
+public class MainActivity extends Activity
+{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        //setContentView(R.id.idListView);
+            super.onCreate(savedInstanceState);
+            setContentView(R.layout.main);
 
-        ArrayList<Ebresztes> ebresztesek = new ArrayList<Ebresztes>();
-        ebresztesek.add(new Ebresztes(false,"9:00","Ebresztő",3));
-        ebresztesek.add(new Ebresztes(true,"9:10","Ebresztő",4));
-        ebresztesek.add(new Ebresztes(false,"9:30","Ebresztő",2));
+            //Ebreszteseklistájának megjelenítése fragmentben.
 
+            FragmentManager fm = getFragmentManager();
 
-        ebresztesAdapter = new EbresztesAdapter(ebresztesek);
-        setListAdapter(ebresztesAdapter);
+            FragmentTransaction ft = fm.beginTransaction();
+            ListaEbresztesek listaEbresztesek = (ListaEbresztesek) fm.findFragmentByTag(ListaEbresztesek.TAG);
 
-        registerForContextMenu(getListView());
-
-    }
-
-    @Override
-    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
-            super.onCreateContextMenu(menu, v, menuInfo);
-
-        if(v.equals(getListView()))
-        {
-            AdapterView.AdapterContextMenuInfo info =
-                    (AdapterView.AdapterContextMenuInfo) menuInfo;
-
-            menu.setHeaderTitle(((Ebresztes)getListAdapter().getItem(info.position)).getUzenet());
-
-        }
-
-        String[] itemsarray = getResources().getStringArray(R.array.ebresztesmenu);
-
-        for (int i = 0; i < itemsarray.length; i++)
-        {
-           //menu.add(Menu.NONE,i,i,itemsarray[i]);
-            menu.add(itemsarray[i]);
-
-        }
-
-    }
-
-    @Override
-    public boolean onContextItemSelected(MenuItem item) {
-            //return super.onContextItemSelected(item);
-
-
-            AdapterView.AdapterContextMenuInfo info =
-                    (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
-            if(item.getItemId() == 0)
+            if(listaEbresztesek == null)
             {
-                ((EbresztesAdapter)getListAdapter()).deleteItem(
-                        (Ebresztes)getListAdapter().getItem(info.position));
-                ((EbresztesAdapter)getListAdapter()).notifyDataSetChanged();
+                listaEbresztesek = new ListaEbresztesek();
             }
-        return true;
+
+            ft.replace(R.id.fragmenthelye,listaEbresztesek);
+            ft.commit();
+
+
     }
+
+    public void onClick(View view)
+    {
+        if(view.getId() == R.id.button1)
+        {
+            Intent i = new Intent();
+            i.setClass(this,Ujebresztes.class);
+            startActivity(i);
+
+        }
+    }
+
+    /*
+     Button btn1 = (Button) findViewById(R.id.button1);
+        btn1.setOnClickListener( new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentManager fm = getFragmentManager();
+
+                FragmentTransaction ft = fm.beginTransaction();
+
+                ft.setTransition(android.R.anim.slide_in_left);
+
+                FragmentTwo fragmentTwo = (FragmentTwo) fm.findFragmentByTag(FragmentTwo.TAG);
+                if(fragmentTwo==null)
+                {
+                    fragmentTwo = new FragmentTwo();
+
+                }
+                ft.replace(R.id.fragmentekhelye,fragmentTwo);
+                ft.commit();
+
+            }
+        });
+     */
 }
