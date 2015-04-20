@@ -23,6 +23,8 @@ import java.util.ArrayList;
 
 public class MainActivity extends Activity
 {
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
@@ -31,7 +33,6 @@ public class MainActivity extends Activity
             //Ebreszteseklistájának megjelenítése fragmentben.
 
             FragmentManager fm = getFragmentManager();
-
             FragmentTransaction ft = fm.beginTransaction();
             ListaEbresztesek listaEbresztesek = (ListaEbresztesek) fm.findFragmentByTag(ListaEbresztesek.TAG);
 
@@ -46,6 +47,8 @@ public class MainActivity extends Activity
 
     }
 
+
+
     public void onClick(View view)
     {
         if(view.getId() == R.id.button1)
@@ -57,27 +60,5 @@ public class MainActivity extends Activity
         }
     }
 
-    /*
-     Button btn1 = (Button) findViewById(R.id.button1);
-        btn1.setOnClickListener( new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                FragmentManager fm = getFragmentManager();
 
-                FragmentTransaction ft = fm.beginTransaction();
-
-                ft.setTransition(android.R.anim.slide_in_left);
-
-                FragmentTwo fragmentTwo = (FragmentTwo) fm.findFragmentByTag(FragmentTwo.TAG);
-                if(fragmentTwo==null)
-                {
-                    fragmentTwo = new FragmentTwo();
-
-                }
-                ft.replace(R.id.fragmentekhelye,fragmentTwo);
-                ft.commit();
-
-            }
-        });
-     */
 }
