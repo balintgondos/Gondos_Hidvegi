@@ -10,7 +10,11 @@
         android:layout_height="wrap_content"
         android:onClick="onClick"
         android:text="@string/ujebresztes"
-        android:layout_alignParentBottom="true"/>
+        android:layout_alignParentBottom="true"
+        android:background="#3200FF"
+        android:layout_margin="10dp"
+        android:textSize="40dp"
+        android:textColor="#FFFFFF"/>
 
 
     <FrameLayout
