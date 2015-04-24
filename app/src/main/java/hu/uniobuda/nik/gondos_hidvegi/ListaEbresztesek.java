@@ -76,7 +76,7 @@ public class ListaEbresztesek extends ListFragment {
 
             db.deleteTitle(kijelolt.getDbID());
             dbrecall();
-            ((EbresztesAdapter)getListAdapter()).notifyDataSetChanged();
+            //((EbresztesAdapter)getListAdapter()).notifyDataSetChanged();
         }
 
 
@@ -89,42 +89,19 @@ public class ListaEbresztesek extends ListFragment {
              super.onResume();
              setListAdapter(ebresztesAdapter);
              registerForContextMenu(getListView());
+             getListView().setClickable(true);
 
-
-            getListView().setOnItemClickListener( new AdapterView.OnItemClickListener() {
-                @Override
-                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    TextView kivalasztott = (TextView) view.findViewById(R.id.kivalasztott);
-                    TextView ebresztesido = (TextView) view.findViewById(R.id.ebresztesideje);
-                        switch (view.getId())
-                        {
-                            case(R.id.hetfo) : kivalasztott.setText("H"); ebresztesido.setText(((Ebresztes)getListAdapter().getItem(position)).napok[0]); break;
-
-                            case(R.id.kedd) : kivalasztott.setText("K"); ebresztesido.setText(((Ebresztes)getListAdapter().getItem(position)).napok[1]); break;
-
-                            case(R.id.szerda) : kivalasztott.setText("SZ"); ebresztesido.setText(((Ebresztes)getListAdapter().getItem(position)).napok[2]); break;
-
-                            case(R.id.csutortok) : kivalasztott.setText("CS"); ebresztesido.setText(((Ebresztes)getListAdapter().getItem(position)).napok[3]); break;
-
-                            case(R.id.pentek) : kivalasztott.setText("P"); ebresztesido.setText(((Ebresztes)getListAdapter().getItem(position)).napok[4]); break;
-
-                            case(R.id.szombat) : kivalasztott.setText("SZT"); ebresztesido.setText(((Ebresztes)getListAdapter().getItem(position)).napok[5]); break;
-
-                            case(R.id.vasarnap) : kivalasztott.setText("V"); ebresztesido.setText(((Ebresztes)getListAdapter().getItem(position)).napok[6]);break;
-                        }
-                }
-            });
 
             if(getActivity().getIntent().getParcelableExtra("ujEbresztes")!=null)
             {
                 Log.v("batyu","nem üres!");
                 Ebresztes newEbresztes = getActivity().getIntent().getParcelableExtra("ujEbresztes");
                 Log.v("ujadatNapoktömb","asd");
-                Log.v("ujadatNapoktömb",newEbresztes.napok[0]+" "+newEbresztes.napok[1]+" "+newEbresztes.napok[2]+" "+newEbresztes.napok[3]);
+                Log.v("ujadatNapoktömb",newEbresztes.napokElem(0)+" "+newEbresztes.napokElem(1));
 
                 if(newEbresztes!=null)
                 {
-                    db.addUser(newEbresztes.getEbresztesIdeje(), newEbresztes.getUzenet(), newEbresztes.getSzundiSzam(),newEbresztes.napok);
+                    db.addUser(newEbresztes.getEbresztesIdeje(), newEbresztes.getUzenet(), newEbresztes.getSzundiSzam(),newEbresztes.getNapok());
 
                 }
             }
@@ -137,20 +114,36 @@ public class ListaEbresztesek extends ListFragment {
 
     private void dbrecall() {
 
-        ebresztesek.clear();
+        //ebresztesek.clear();
+
+        for(int i = 0; i < ebresztesek.size();i=i+1)
+        {
+            ebresztesek.remove(i);
+        }
+
         Cursor c = db.getAllUser();
         while(c.isAfterLast() == false)
         {
-            String[] napok = new String[6];
+            String[] napok = new String[7];
             for (int i = 0; i<napok.length;i++)
             {
                 napok[i] = c.getString(4+i);
+                Log.v("dbrecall()_for",c.getString(4+1));
             }
-            Ebresztes ebresztes = new Ebresztes(true,c.getLong(0),c.getString(1),c.getString(2),c.getInt(3),napok);
+            Ebresztes ebresztes = new Ebresztes(true,c.getLong(0),c.getString(1),c.getString(2),c.getInt(3));
+            ebresztes.napokBeallit(napok);
+            Log.v("ebresztes_letrejöttUJRA",ebresztes.napokElem(0));
             ebresztesek.add(ebresztes);
             c.moveToNext();
         }
-        ((EbresztesAdapter) getListAdapter()).notifyDataSetChanged();
+
+        for(int i = 0; i < ebresztesek.size();i=i+1)
+        {
+            Log.v("ebresztesek_listázása",ebresztesek.get(i).napokElem(1));
+        }
+
+        //((EbresztesAdapter) getListAdapter()).notifyDataSetChanged();
+        ebresztesAdapter.notifyDataSetChanged();
 
     }
 

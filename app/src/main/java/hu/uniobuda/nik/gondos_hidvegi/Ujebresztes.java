@@ -90,22 +90,6 @@ public class Ujebresztes extends Activity {
     }
 
 
-    private String timePickerKiolvas()
-    {
-        /*return (timePicker.getCurrentHour() + ":" +
-                timePicker.getCurrentMinute());*/
-        return pad(timePicker.getCurrentHour())+ ":" + pad(timePicker.getCurrentMinute());
-    }
-
-
-    private String pad(int c) {
-        if (c >= 10)
-            return String.valueOf(c);
-        else
-            return "0" + String.valueOf(c);
-    }
-
-
     public void onClick(View v)
     {
         switch (v.getId())
@@ -125,10 +109,11 @@ public class Ujebresztes extends Activity {
                 {
                    Log.v("jóág","ok");
                    nemEgyszeri(); //beállítja a heti tömböt (sarray)
-                   newEbresztes = new Ebresztes(false,"-","ujEbresztes",1,sarray);
+                   newEbresztes = new Ebresztes(false,"","ujEbresztes",1);
+                   newEbresztes.napokBeallit(sarray);
                     //ide jön a több napos ébresztés...
                 }
-                Log.v("intentkezdodik",newEbresztes.napok[0]);
+                Log.v("intentkezdodik",newEbresztes.napokElem(0));
                 Intent i = new Intent(Ujebresztes.this, MainActivity.class);
                 i.putExtra("ujEbresztes", newEbresztes);
                 startActivity(i);
@@ -210,17 +195,20 @@ public class Ujebresztes extends Activity {
 
     public void nemEgyszeri()
     {
+        for(int i = 0 ; i < sarray.length; i++)
+        {
+            sarray[i] = " - ";
+        }
+
 
         if(h.getCurrentTextColor() == Color.BLUE)
             sarray[0]=hido.getText().toString();
-            Log.v("hido.gettext",hido.getText().toString());
-            Log.v("sarray[0]",sarray[0]);
 
         if(k.getCurrentTextColor() == Color.BLUE)
-            sarray[1]=kido.getText().toString();
+            sarray[1] = kido.getText().toString();
 
         if(sz.getCurrentTextColor() == Color.BLUE)
-            sarray[2]=szido.getText().toString();
+           sarray[2]=szido.getText().toString();
 
         if(cs.getCurrentTextColor() == Color.BLUE)
             sarray[3]=csido.getText().toString();
@@ -236,6 +224,22 @@ public class Ujebresztes extends Activity {
         Log.v("sarray[6]",sarray[6]);
 
 
+
+    }
+
+    private String timePickerKiolvas()
+    {
+        /*return (timePicker.getCurrentHour() + ":" +
+                timePicker.getCurrentMinute());*/
+        return pad(timePicker.getCurrentHour())+ ":" + pad(timePicker.getCurrentMinute());
+    }
+
+
+    private String pad(int c) {
+        if (c >= 10)
+            return String.valueOf(c);
+        else
+            return "0" + String.valueOf(c);
     }
 
 
