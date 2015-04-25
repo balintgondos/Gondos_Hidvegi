@@ -102,17 +102,18 @@ public class Ujebresztes extends Activity {
                 //kód
                 Ebresztes newEbresztes;
                 if(cb.isChecked()) {
-                    newEbresztes = new Ebresztes(false, timePickerKiolvas(), "ujEbresztes", 1);
+                    uresTomb();
+                    newEbresztes = new Ebresztes(false, timePickerKiolvas(), "one", 1);
                     Log.v("rossz","awwwww");
                 }
                 else
                 {
                    Log.v("jóág","ok");
                    nemEgyszeri(); //beállítja a heti tömböt (sarray)
-                   newEbresztes = new Ebresztes(false,"","ujEbresztes",1);
-                   newEbresztes.napokBeallit(sarray);
+                   newEbresztes = new Ebresztes(false,"","more",1);
                     //ide jön a több napos ébresztés...
                 }
+                newEbresztes.napokBeallit(sarray);
                 Log.v("intentkezdodik",newEbresztes.napokElem(0));
                 Intent i = new Intent(Ujebresztes.this, MainActivity.class);
                 i.putExtra("ujEbresztes", newEbresztes);
@@ -193,14 +194,18 @@ public class Ujebresztes extends Activity {
 
     }
 
-    public void nemEgyszeri()
+    public void uresTomb()
     {
         for(int i = 0 ; i < sarray.length; i++)
         {
             sarray[i] = " - ";
         }
 
+    }
 
+    public void nemEgyszeri()
+    {
+       uresTomb();
         if(h.getCurrentTextColor() == Color.BLUE)
             sarray[0]=hido.getText().toString();
 

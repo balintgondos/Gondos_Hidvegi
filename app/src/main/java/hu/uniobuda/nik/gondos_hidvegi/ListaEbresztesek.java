@@ -96,8 +96,6 @@ public class ListaEbresztesek extends ListFragment {
             {
                 Log.v("batyu","nem üres!");
                 Ebresztes newEbresztes = getActivity().getIntent().getParcelableExtra("ujEbresztes");
-                Log.v("ujadatNapoktömb","asd");
-                Log.v("ujadatNapoktömb",newEbresztes.napokElem(0)+" "+newEbresztes.napokElem(1));
 
                 if(newEbresztes!=null)
                 {
@@ -114,13 +112,11 @@ public class ListaEbresztesek extends ListFragment {
 
     private void dbrecall() {
 
-        //ebresztesek.clear();
-
         for(int i = 0; i < ebresztesek.size();i=i+1)
         {
             ebresztesek.remove(i);
         }
-
+        ebresztesek.clear();
         Cursor c = db.getAllUser();
         while(c.isAfterLast() == false)
         {
@@ -128,22 +124,14 @@ public class ListaEbresztesek extends ListFragment {
             for (int i = 0; i<napok.length;i++)
             {
                 napok[i] = c.getString(4+i);
-                Log.v("dbrecall()_for",c.getString(4+1));
             }
             Ebresztes ebresztes = new Ebresztes(true,c.getLong(0),c.getString(1),c.getString(2),c.getInt(3));
             ebresztes.napokBeallit(napok);
-            Log.v("ebresztes_letrejöttUJRA",ebresztes.napokElem(0));
             ebresztesek.add(ebresztes);
             c.moveToNext();
         }
 
-        for(int i = 0; i < ebresztesek.size();i=i+1)
-        {
-            Log.v("ebresztesek_listázása",ebresztesek.get(i).napokElem(1));
-        }
-
-        //((EbresztesAdapter) getListAdapter()).notifyDataSetChanged();
-        ebresztesAdapter.notifyDataSetChanged();
+        ((EbresztesAdapter) getListAdapter()).notifyDataSetChanged();
 
     }
 
