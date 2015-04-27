@@ -7,78 +7,129 @@
     android:layout_centerInParent="true"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <ImageView
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:src="@drawable/a"
-        android:id="@+id/AorM"
-      />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/AorM"
-        android:textSize="30dp"
-        android:paddingLeft="20dp"
-        android:text=":"
-        android:id="@+id/kivalasztott"
-        />
 
 
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/ll1"
+                    android:clickable="true">
 
+                    <TextView
+                        android:textSize="30dp"
+                        android:id="@+id/napok"
+                        android:text="Napok: "
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
                   <TextView
-                      android:layout_toRightOf="@+id/AorM"
-                      android:paddingLeft="10dp"
-                      android:textSize="50dp"
-                      android:id="@+id/H"
-                      android:text="H"
-                      android:layout_width="wrap_content"
-                      android:layout_height="wrap_content"/>
-
-                  <TextView
-                      android:textSize="50dp"
-                      android:id="@+id/K"
-                      android:layout_toRightOf="@+id/H"
-                      android:text="K"
-                      android:layout_width="wrap_content"
-                      android:layout_height="wrap_content"/>
-
-                  <TextView
-                      android:textSize="50dp"
-                      android:id="@+id/SZ"
-                      android:layout_toRightOf="@+id/K"
-                      android:text="SZ"
-                      android:layout_width="wrap_content"
-                      android:layout_height="wrap_content"/>
-
-                  <TextView
-                      android:textSize="50dp"
-                      android:id="@+id/CS"
-                      android:layout_toRightOf="@+id/SZ"
-                      android:text="CS"
-                      android:layout_width="wrap_content"
-                      android:layout_height="wrap_content"/>
-
-                  <TextView
-                      android:textSize="50dp"
-                      android:layout_toRightOf="@+id/CS"
-                      android:id="@+id/P"
-                      android:text="P"
-                      android:layout_width="wrap_content"
-                      android:layout_height="wrap_content"/>
-
-
-
-                  <TextView
-                      android:layout_toRightOf="@+id/kivalasztott"
-                      android:paddingLeft="10dp"
                       android:textSize="30dp"
-                      android:layout_below="@+id/H"
-                      android:id="@+id/ebresztesideje"
-                      android:text="Ébresztes ideje"
+                      android:id="@+id/hetfo"
+                      android:text="H"
+                      android:clickable="true"
                       android:layout_width="wrap_content"
-                      android:layout_height="wrap_content"
-                      />
+                      android:layout_height="wrap_content"/>
+
+                  <TextView
+                      android:textSize="30dp"
+                      android:id="@+id/kedd"
+                      android:text="K"
+                      android:clickable="true"
+                      android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"/>
+
+                  <TextView
+                      android:textSize="30dp"
+                      android:id="@+id/szerda"
+                      android:text="SZ"
+                      android:clickable="true"
+                      android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"/>
+
+                  <TextView
+                      android:textSize="30dp"
+                      android:id="@+id/csutortok"
+                      android:text="CS"
+                      android:clickable="true"
+                      android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"/>
+
+                  <TextView
+                      android:textSize="30dp"
+                      android:id="@+id/pentek"
+                      android:text="P"
+                      android:clickable="true"
+                      android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"/>
+
+                  <TextView
+                        android:textSize="30dp"
+                        android:id="@+id/szombat"
+                        android:text="SZ"
+                        android:clickable="true"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                  <TextView
+                        android:textSize="30dp"
+                        android:id="@+id/vasarnap"
+                        android:text="V"
+                        android:clickable="true"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                </LinearLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/ll1">
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="-"
+                        android:textSize="30dp"
+                        android:id="@+id/kivalasztott"/>
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="30dp"
+                        android:text=":"
+                        android:layout_toRightOf="@id/kivalasztott"
+                        android:id="@+id/kettospont"
+                        />
+
+                    <TextView
+                        android:layout_toRightOf="@+id/kettospont"
+                        android:paddingLeft="10dp"
+                        android:textSize="30dp"
+                        android:id="@+id/ebresztesideje"
+                        android:text="Ébresztes ideje"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        />
+
+                    <ImageView
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:src="@drawable/red"
+                        android:id="@+id/AorM"
+                        android:onClick="onClick"
+                        android:clickable="true"
+                        android:paddingLeft="10dp"
+                        android:layout_gravity="right"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerInParent="true"/>
+
+
+                    </RelativeLayout>
+
+
+
+
 
 
 </RelativeLayout>

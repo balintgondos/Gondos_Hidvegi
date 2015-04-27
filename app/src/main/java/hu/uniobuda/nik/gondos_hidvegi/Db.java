@@ -22,15 +22,30 @@ public class Db {
     private final static String EBRESZTES_IDEJE = "ebresztesideje";
     private final static String UZENET = "uzenet";
     private final static String SZUNDI_SZAM = "szundiszam";
+    private final static String H = "hetfo";
+    private final static String K = "kedd";
+    private final static String SZ = "szerda";
+    private final static String CS = "csutortok";
+    private final static String P = "pentek";
+    private final static String SZT = "szombat";
+    private final static String V = "vasarnap";
+
 
 
     //új tábla
     private final static String CREATE_TABLE = "CREATE TABLE "+ TABLE_NAME +
             "(" +
             ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
-            EBRESZTES_IDEJE + " TEXT NOT NULL," +
+            EBRESZTES_IDEJE + " TEXT," +
             UZENET + " TEXT NOT NULL," +
-            SZUNDI_SZAM + " INTEGER NOT NULL)";
+            SZUNDI_SZAM + " INTEGER NOT NULL," +
+            H + " TEXT," +
+            K + " TEXT," +
+            SZ + " TEXT," +
+            CS + " TEXT," +
+            P + " TEXT," +
+            SZT + " TEXT," +
+            V + " TEXT)";
 
     //törlés
     private final static String DROP_TABLE = "DROP TABLE IF EXISTS" + TABLE_NAME;
@@ -44,12 +59,20 @@ public class Db {
     }
 
 
-    public long addUser(String ebresztesideje, String uzenet, int szundiszam) {
+    public long addUser(String ebresztesideje, String uzenet, int szundiszam, String[] napok) {
+
         SQLiteDatabase dba = dbHelper.getWritableDatabase();
         ContentValues cvs = new ContentValues();
         cvs.put(EBRESZTES_IDEJE, ebresztesideje);
         cvs.put(UZENET, uzenet);
         cvs.put(SZUNDI_SZAM, szundiszam);
+        cvs.put(H, napok[0]);
+        cvs.put(K, napok[1]);
+        cvs.put(SZ, napok[2]);
+        cvs.put(CS, napok[3]);
+        cvs.put(P, napok[4]);
+        cvs.put(SZT, napok[5]);
+        cvs.put(V, napok[6]);
         long id = dba.insert(TABLE_NAME, null, cvs);
         dba.close();
         return id;
