@@ -96,12 +96,10 @@ public class ListaEbresztesek extends ListFragment {
             {
                 Log.v("batyu","nem üres!");
                 Ebresztes newEbresztes = getActivity().getIntent().getParcelableExtra("ujEbresztes");
-                Log.v("ujadatNapoktömb","asd");
-                Log.v("ujadatNapoktömb",newEbresztes.napokElem(0)+" "+newEbresztes.napokElem(1));
 
                 if(newEbresztes!=null)
                 {
-                    db.addUser(newEbresztes.getEbresztesIdeje(), newEbresztes.getUzenet(), newEbresztes.getSzundiSzam(),newEbresztes.getNapok());
+                    db.addEbresztes(newEbresztes.getEbresztesIdeje(), newEbresztes.getUzenet(), newEbresztes.getSzundiSzam(),newEbresztes.getNapok(),newEbresztes.getOnce());
 
                 }
             }
@@ -114,36 +112,28 @@ public class ListaEbresztesek extends ListFragment {
 
     private void dbrecall() {
 
-        //ebresztesek.clear();
-
         for(int i = 0; i < ebresztesek.size();i=i+1)
         {
             ebresztesek.remove(i);
         }
-
-        Cursor c = db.getAllUser();
+        ebresztesek.clear();
+        Cursor c = db.getAllEbresztes();
         while(c.isAfterLast() == false)
         {
             String[] napok = new String[7];
             for (int i = 0; i<napok.length;i++)
             {
                 napok[i] = c.getString(4+i);
-                Log.v("dbrecall()_for",c.getString(4+1));
             }
-            Ebresztes ebresztes = new Ebresztes(true,c.getLong(0),c.getString(1),c.getString(2),c.getInt(3));
+            Ebresztes ebresztes = new Ebresztes(true,c.getLong(0),c.getString(1),c.getString(2),c.getInt(3),c.getInt(11));
+            Log.v("dbrecall_id",String.valueOf(ebresztes.getDbID()));
             ebresztes.napokBeallit(napok);
-            Log.v("ebresztes_letrejöttUJRA",ebresztes.napokElem(0));
             ebresztesek.add(ebresztes);
             c.moveToNext();
         }
+        c.close();
 
-        for(int i = 0; i < ebresztesek.size();i=i+1)
-        {
-            Log.v("ebresztesek_listázása",ebresztesek.get(i).napokElem(1));
-        }
-
-        //((EbresztesAdapter) getListAdapter()).notifyDataSetChanged();
-        ebresztesAdapter.notifyDataSetChanged();
+        ((EbresztesAdapter) getListAdapter()).notifyDataSetChanged();
 
     }
 

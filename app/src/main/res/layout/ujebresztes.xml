@@ -4,27 +4,7 @@
     android:orientation="vertical">
 
     <RelativeLayout
-        android:id="@+id/rl1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
-
-        <TimePicker
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/timePicker"
-            android:layout_alignParentRight="true"/>
-
-        <CheckBox
-
-            android:layout_toLeftOf="@id/timePicker"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/cb1"
-            android:textSize="30dp"
-            android:text="Egyszeri"/>
-    </RelativeLayout>
-
-    <RelativeLayout
+        android:id="@+id/rl2"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content">
 
@@ -149,6 +129,29 @@
                     android:textSize="25dp"
                     android:id="@+id/vido"/>
                 </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@id/ll2"
+                    android:orientation="vertical"
+                    android:layout_alignParentRight="true">
+
+                    <TimePicker
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/timePicker"
+                        android:layout_gravity="right"/>
+
+                    <CheckBox
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/cb1"
+                        android:layout_gravity="right"
+                        android:textSize="30dp"
+                        android:text="Egyszeri"/>
+
+                    </LinearLayout>
     </RelativeLayout>
 
 
