@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.TextView;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 import java.util.Calendar;
 
@@ -28,6 +29,9 @@ public class Ujebresztes extends Activity {
     TextView hido,kido,szido,csido,pido,sztido,vido;
     TextView h,k,sz,cs,p,szt,vas;
     String[] sarray;
+    int selected;
+    boolean mehet;
+    Ebresztes newEbresztes;
 
 
     @Override
@@ -35,6 +39,8 @@ public class Ujebresztes extends Activity {
             super.onCreate(savedInstanceState);
             setContentView(R.layout.ujebresztes);
 
+        mehet = true;
+        selected = 0;
         sarray = new String[7];
         btnMegse = (Button) findViewById(R.id.btnMegse);
         btnOk = (Button) findViewById(R.id.btnOk);
@@ -64,25 +70,31 @@ public class Ujebresztes extends Activity {
           public void onTimeChanged(TimePicker view, int hourOfDay, int minute) {
               if(h.getCurrentTextColor() == Color.BLUE)
                 hido.setText(timePickerKiolvas());
-                Log.v("hétfői idő",hido.getText().toString());
+                selected++;
 
               if(k.getCurrentTextColor() == Color.BLUE)
                   kido.setText(timePickerKiolvas());
+                  selected++;
 
               if(sz.getCurrentTextColor() == Color.BLUE)
                   szido.setText(timePickerKiolvas());
+                  selected++;
 
               if(cs.getCurrentTextColor() == Color.BLUE)
                   csido.setText(timePickerKiolvas());
+                  selected++;
 
               if(p.getCurrentTextColor() == Color.BLUE)
                   pido.setText(timePickerKiolvas());
+                  selected++;
 
               if(szt.getCurrentTextColor() == Color.BLUE)
                   sztido.setText(timePickerKiolvas());
+                  selected++;
 
               if(vas.getCurrentTextColor() == Color.BLUE)
                   vido.setText(timePickerKiolvas());
+                  selected++;
 
 
           }
@@ -100,34 +112,48 @@ public class Ujebresztes extends Activity {
 
             case R.id.btnOk:
                 //kód
-                Ebresztes newEbresztes;
+
                 if(cb.isChecked()) {
                     uresTomb();
-                    newEbresztes = new Ebresztes(false, timePickerKiolvas(), "one", 1);
-                    Log.v("rossz","awwwww");
+                    newEbresztes = new Ebresztes(false, timePickerKiolvas(), "one", 1,1);
+                    mehet = true;
                 }
                 else
                 {
-                   Log.v("jóág","ok");
-                   nemEgyszeri(); //beállítja a heti tömböt (sarray)
-                   newEbresztes = new Ebresztes(false,"","more",1);
+                   if(selected>0) {
+                       nemEgyszeri(); //beállítja a heti tömböt (sarray)
+                       newEbresztes = new Ebresztes(false, "", "more", 1, 0);
+                       mehet = true;
+                   }else
+                   {
+                       mehet = false;
+                   }
                     //ide jön a több napos ébresztés...
                 }
-                newEbresztes.napokBeallit(sarray);
-                Log.v("intentkezdodik",newEbresztes.napokElem(0));
-                Intent i = new Intent(Ujebresztes.this, MainActivity.class);
-                i.putExtra("ujEbresztes", newEbresztes);
-                startActivity(i);
-                finish();
 
-                break;
+                if(mehet) {
+                    newEbresztes.napokBeallit(sarray);
+                    Intent i = new Intent(Ujebresztes.this, MainActivity.class);
+                    i.putExtra("ujEbresztes", newEbresztes);
+                    startActivity(i);
+                    finish();
+                    break;
+                }
+                else
+                {
+                    Toast.makeText(this,"Nem adott meg több ébresztést vagy jelölje be az egyszeri ébresztést!",Toast.LENGTH_LONG).show();
+                }
+
+
 
             case(R.id.h) :
                 if(h.getCurrentTextColor() != Color.BLUE) {
                     h.setTextColor(Color.BLUE);
+
                 }else
                 {
                     h.setTextColor(Color.BLACK);
+                    selected--;
                 }
                 break;
 
@@ -137,6 +163,7 @@ public class Ujebresztes extends Activity {
                 }else
                 {
                     k.setTextColor(Color.BLACK);
+                    selected--;
                 }
                 break;
 
@@ -146,6 +173,7 @@ public class Ujebresztes extends Activity {
                 }else
                 {
                     sz.setTextColor(Color.BLACK);
+                    selected--;
                 }
                 break;
 
@@ -155,6 +183,7 @@ public class Ujebresztes extends Activity {
                 }else
                 {
                     cs.setTextColor(Color.BLACK);
+                    selected--;
                 }
                 break;
 
@@ -164,6 +193,7 @@ public class Ujebresztes extends Activity {
                 }else
                 {
                     p.setTextColor(Color.BLACK);
+                    selected--;
                 }
                 break;
 
@@ -173,6 +203,7 @@ public class Ujebresztes extends Activity {
                 }else
                 {
                     szt.setTextColor(Color.BLACK);
+                    selected--;
                 }
                 break;
 
@@ -182,6 +213,7 @@ public class Ujebresztes extends Activity {
                 }else
                 {
                     vas.setTextColor(Color.BLACK);
+                    selected--;
                 }
                 break;
 
@@ -226,8 +258,6 @@ public class Ujebresztes extends Activity {
 
         if(vas.getCurrentTextColor() == Color.BLUE)
             sarray[6]=vido.getText().toString();
-        Log.v("sarray[6]",sarray[6]);
-
 
 
     }

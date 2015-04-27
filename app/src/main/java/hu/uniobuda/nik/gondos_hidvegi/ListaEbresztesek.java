@@ -99,7 +99,7 @@ public class ListaEbresztesek extends ListFragment {
 
                 if(newEbresztes!=null)
                 {
-                    db.addUser(newEbresztes.getEbresztesIdeje(), newEbresztes.getUzenet(), newEbresztes.getSzundiSzam(),newEbresztes.getNapok());
+                    db.addEbresztes(newEbresztes.getEbresztesIdeje(), newEbresztes.getUzenet(), newEbresztes.getSzundiSzam(),newEbresztes.getNapok(),newEbresztes.getOnce());
 
                 }
             }
@@ -117,7 +117,7 @@ public class ListaEbresztesek extends ListFragment {
             ebresztesek.remove(i);
         }
         ebresztesek.clear();
-        Cursor c = db.getAllUser();
+        Cursor c = db.getAllEbresztes();
         while(c.isAfterLast() == false)
         {
             String[] napok = new String[7];
@@ -125,11 +125,13 @@ public class ListaEbresztesek extends ListFragment {
             {
                 napok[i] = c.getString(4+i);
             }
-            Ebresztes ebresztes = new Ebresztes(true,c.getLong(0),c.getString(1),c.getString(2),c.getInt(3));
+            Ebresztes ebresztes = new Ebresztes(true,c.getLong(0),c.getString(1),c.getString(2),c.getInt(3),c.getInt(11));
+            Log.v("dbrecall_id",String.valueOf(ebresztes.getDbID()));
             ebresztes.napokBeallit(napok);
             ebresztesek.add(ebresztes);
             c.moveToNext();
         }
+        c.close();
 
         ((EbresztesAdapter) getListAdapter()).notifyDataSetChanged();
 

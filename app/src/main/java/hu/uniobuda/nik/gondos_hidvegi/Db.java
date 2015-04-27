@@ -29,8 +29,7 @@ public class Db {
     private final static String P = "pentek";
     private final static String SZT = "szombat";
     private final static String V = "vasarnap";
-
-
+    private final static String ONCE = "once";
 
     //új tábla
     private final static String CREATE_TABLE = "CREATE TABLE "+ TABLE_NAME +
@@ -38,14 +37,17 @@ public class Db {
             ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
             EBRESZTES_IDEJE + " TEXT," +
             UZENET + " TEXT NOT NULL," +
-            SZUNDI_SZAM + " INTEGER NOT NULL," +
+            SZUNDI_SZAM + " INTEGER," +
             H + " TEXT," +
             K + " TEXT," +
             SZ + " TEXT," +
             CS + " TEXT," +
             P + " TEXT," +
             SZT + " TEXT," +
-            V + " TEXT)";
+            V + " TEXT," +
+            ONCE + " INTEGER)";
+
+
 
     //törlés
     private final static String DROP_TABLE = "DROP TABLE IF EXISTS" + TABLE_NAME;
@@ -59,7 +61,7 @@ public class Db {
     }
 
 
-    public long addUser(String ebresztesideje, String uzenet, int szundiszam, String[] napok) {
+    public long addEbresztes(String ebresztesideje, String uzenet, int szundiszam, String[] napok, int once) {
 
         SQLiteDatabase dba = dbHelper.getWritableDatabase();
         ContentValues cvs = new ContentValues();
@@ -73,12 +75,13 @@ public class Db {
         cvs.put(P, napok[4]);
         cvs.put(SZT, napok[5]);
         cvs.put(V, napok[6]);
+        cvs.put(ONCE, once);
         long id = dba.insert(TABLE_NAME, null, cvs);
         dba.close();
         return id;
     }
 
-    public Cursor getAllUser() {
+    public Cursor getAllEbresztes() {
         SQLiteDatabase dba = dbHelper.getReadableDatabase();
         Cursor c = dba.query(TABLE_NAME, null, null, null, null, null, null);
         c.moveToFirst();
