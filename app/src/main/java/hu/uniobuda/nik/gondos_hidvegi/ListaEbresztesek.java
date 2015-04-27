@@ -1,21 +1,13 @@
 package hu.uniobuda.nik.gondos_hidvegi;
 
-import android.app.Activity;
 import android.app.ListFragment;
-import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.util.Log;
 import android.view.ContextMenu;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Adapter;
-import android.widget.ListAdapter;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.TextView;
 
