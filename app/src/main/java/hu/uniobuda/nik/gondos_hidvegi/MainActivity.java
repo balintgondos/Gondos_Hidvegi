@@ -44,6 +44,7 @@ public class MainActivity extends Activity
             Intent i = new Intent();
             i.setClass(this,Ujebresztes.class);
             startActivity(i);
+            finish();
 
         }
     }

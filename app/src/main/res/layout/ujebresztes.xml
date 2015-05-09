@@ -181,4 +181,26 @@
 
     </RelativeLayout>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="bottom">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Szundi Szám:"
+            android:gravity="center"
+            android:textSize="40dp"/>
+
+        <NumberPicker
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/numberPickerUjEbr">
+
+            </NumberPicker>
+
+        </LinearLayout>
+
 </LinearLayout>

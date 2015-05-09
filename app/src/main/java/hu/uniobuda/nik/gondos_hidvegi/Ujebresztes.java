@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.NumberPicker;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
@@ -27,6 +28,8 @@ public class Ujebresztes extends Activity {
     int selected;
     boolean mehet;
     Ebresztes newEbresztes;
+    NumberPicker np;
+    int npvalue;
 
 
     @Override
@@ -41,7 +44,7 @@ public class Ujebresztes extends Activity {
         btnOk = (Button) findViewById(R.id.btnOk);
         timePicker = (TimePicker) findViewById(R.id.timePicker);
         cb = (CheckBox) findViewById(R.id.cb1);
-        timePicker.setIs24HourView(true);
+        //timePicker.setIs24HourView(true);
         timePicker.setAddStatesFromChildren(true);
         h = (TextView) findViewById(R.id.h);
         k = (TextView) findViewById(R.id.k);
@@ -58,6 +61,34 @@ public class Ujebresztes extends Activity {
         pido = (TextView) findViewById(R.id.pido);
         sztido = (TextView) findViewById(R.id.sztido);
         vido = (TextView) findViewById(R.id.vido);
+        np = (NumberPicker) findViewById(R.id.numberPickerUjEbr);
+        np.post(new Runnable() {
+            @Override
+            public void run() {
+
+                String[] nums = new String[21];
+                for(int i=0; i<nums.length; i++) {
+                    nums[i] = Integer.toString(i);
+                }
+
+                np.setMaxValue(20);
+                np.setMinValue(0);
+                np.setWrapSelectorWheel(true);
+                np.setDisplayedValues(nums);
+                np.setValue(1);
+                np.clearFocus();
+                npvalue = np.getValue();
+            }
+        });
+
+        np.setOnValueChangedListener( new NumberPicker.OnValueChangeListener() {
+            @Override
+            public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
+                np.clearFocus();
+                npvalue = np.getValue();
+            }
+        });
+
 
 
       timePicker.setOnTimeChangedListener( new TimePicker.OnTimeChangedListener() {
@@ -102,6 +133,7 @@ public class Ujebresztes extends Activity {
         switch (v.getId())
         {
             case R.id.btnMegse:
+
                 finish();
                 break;
 
@@ -110,14 +142,14 @@ public class Ujebresztes extends Activity {
 
                 if(cb.isChecked()) {
                     uresTomb();
-                    newEbresztes = new Ebresztes(false, timePickerKiolvas(), "one", 1,1);
+                    newEbresztes = new Ebresztes(false, timePickerKiolvas(), "one", npvalue,1);
                     mehet = true;
                 }
                 else
                 {
                    if(selected>0) {
                        nemEgyszeri(); //beállítja a heti tömböt (sarray)
-                       newEbresztes = new Ebresztes(false, "", "more", 1, 0);
+                       newEbresztes = new Ebresztes(false, "", "more", npvalue, 0);
                        mehet = true;
                    }else
                    {
@@ -139,7 +171,7 @@ public class Ujebresztes extends Activity {
                     Toast.makeText(this,"Nem adott meg több ébresztést vagy jelölje be az egyszeri ébresztést!",Toast.LENGTH_LONG).show();
                 }
 
-
+                break;
 
             case(R.id.h) :
                 if(h.getCurrentTextColor() != Color.BLUE) {
@@ -232,7 +264,7 @@ public class Ujebresztes extends Activity {
 
     public void nemEgyszeri()
     {
-       uresTomb();
+        uresTomb();
         if(h.getCurrentTextColor() == Color.BLUE)
             sarray[0]=hido.getText().toString();
 

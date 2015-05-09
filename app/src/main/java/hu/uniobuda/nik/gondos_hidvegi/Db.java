@@ -60,6 +60,12 @@ public class Db {
         this.dbHelper = new OpenHelp(context);
     }
 
+    public void deleteALL()
+    {
+        SQLiteDatabase dba = dbHelper.getWritableDatabase();
+        dba.execSQL("delete from "+ TABLE_NAME);
+    }
+
 
     public long addEbresztes(String ebresztesideje, String uzenet, int szundiszam, String[] napok, int once) {
 

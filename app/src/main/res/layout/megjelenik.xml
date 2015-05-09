@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:gravity="bottom"
+    android:layout_gravity="center_horizontal"
+    android:orientation="vertical">
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tvSzundiSzam"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="30dp"
+            android:text="Ennyi szundi van még: "
+            android:gravity="center"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Következő ébresztés (percben):"
+            android:textSize="50dp"
+            android:gravity="center"/>
+
+        <NumberPicker
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/numberPicker"/>
+
+        </LinearLayout>
+
+    <RelativeLayout
+
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
+        <TextView
+             android:id="@+id/tvX"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:text="X:"
+             android:textSize="40dp"/>
+        <TextView
+            android:id="@+id/tvY"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Y:"
+            android:textSize="40dp"
+            android:layout_below="@+id/tvX"/>
+        <TextView
+            android:id="@+id/tvZ"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Z:"
+            android:textSize="40dp"
+            android:layout_below="@id/tvY"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tvXset"
+            android:text="myX"
+            android:textSize="40dp"
+            android:layout_toRightOf="@id/tvX"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tvYset"
+            android:textSize="40dp"
+            android:text="myY"
+            android:layout_toRightOf="@id/tvY"
+            android:layout_below="@+id/tvXset"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tvZset"
+            android:text="myZ"
+            android:textSize="40dp"
+            android:layout_toRightOf="@id/tvZ"
+            android:layout_below="@+id/tvYset"/>
+
+    </RelativeLayout>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Szundi"
+        android:id="@+id/btn1megjelenik"
+        android:layout_gravity="bottom"  />
+
+
+
+</LinearLayout>

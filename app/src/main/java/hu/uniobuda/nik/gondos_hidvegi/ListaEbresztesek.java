@@ -6,10 +6,12 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -63,11 +65,17 @@ public class ListaEbresztesek extends ListFragment {
                 (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
         if(item.getItemId() == 0)
         {
+
             //((EbresztesAdapter)getListAdapter()).deleteItem(
             Ebresztes kijelolt = (Ebresztes)getListAdapter().getItem(info.position);
-
-            db.deleteTitle(kijelolt.getDbID());
-            dbrecall();
+            if(!kijelolt.isActive()) {
+                db.deleteTitle(kijelolt.getDbID());
+                dbrecall();
+            }
+            else
+            {
+                Toast.makeText(getActivity(),"Aktív ébresztés nem törölhető!",Toast.LENGTH_LONG).show();
+            }
             //((EbresztesAdapter)getListAdapter()).notifyDataSetChanged();
         }
 
@@ -75,6 +83,32 @@ public class ListaEbresztesek extends ListFragment {
 
         return true;
     }
+
+
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        setHasOptionsMenu(true);
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+           super.onCreateOptionsMenu(menu, inflater);
+           inflater.inflate(R.menu.listmenu,menu);
+            //getActivity().getMenuInflater().inflate(R.menu.listmenu,menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        if(item.getItemId() == R.id.listmenu) {
+            db.deleteALL();
+            dbrecall();
+
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
 
     @Override
     public void onResume() {
@@ -88,7 +122,7 @@ public class ListaEbresztesek extends ListFragment {
             {
                 Log.v("batyu","nem üres!");
                 Ebresztes newEbresztes = getActivity().getIntent().getParcelableExtra("ujEbresztes");
-
+                getActivity().getIntent().removeExtra("ujEbresztes");
                 if(newEbresztes!=null)
                 {
                     db.addEbresztes(newEbresztes.getEbresztesIdeje(), newEbresztes.getUzenet(), newEbresztes.getSzundiSzam(),newEbresztes.getNapok(),newEbresztes.getOnce());
@@ -117,7 +151,7 @@ public class ListaEbresztesek extends ListFragment {
             {
                 napok[i] = c.getString(4+i);
             }
-            Ebresztes ebresztes = new Ebresztes(true,c.getLong(0),c.getString(1),c.getString(2),c.getInt(3),c.getInt(11));
+            Ebresztes ebresztes = new Ebresztes(false,c.getLong(0),c.getString(1),c.getString(2),c.getInt(3),c.getInt(11));
             Log.v("dbrecall_id",String.valueOf(ebresztes.getDbID()));
             ebresztes.napokBeallit(napok);
             ebresztesek.add(ebresztes);
