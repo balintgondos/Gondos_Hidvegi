@@ -16,6 +16,10 @@ public class EbresztoBroadcast extends BroadcastReceiver {
         Intent i = new Intent();
         i.setClassName("hu.uniobuda.nik.gondos_hidvegi","hu.uniobuda.nik.gondos_hidvegi.Megjelenik");
         i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        if(intent.getLongExtra("ebresztesid",0)!=0)
+        {
+            i.putExtra("id",intent.getLongExtra("ebresztesid",0));
+        }
         if(intent.getIntExtra("szundiszam",0)!=0) {
             szundi = intent.getIntExtra("szundiszam", 0);
             intent.removeExtra("szundiszam");

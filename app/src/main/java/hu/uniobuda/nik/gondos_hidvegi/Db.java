@@ -30,6 +30,7 @@ public class Db {
     private final static String SZT = "szombat";
     private final static String V = "vasarnap";
     private final static String ONCE = "once";
+    private final static String ACTIVE ="active";
 
     //új tábla
     private final static String CREATE_TABLE = "CREATE TABLE "+ TABLE_NAME +
@@ -45,7 +46,8 @@ public class Db {
             P + " TEXT," +
             SZT + " TEXT," +
             V + " TEXT," +
-            ONCE + " INTEGER)";
+            ONCE + " INTEGER," +
+            ACTIVE + " INTEGER)";
 
 
 
@@ -67,8 +69,8 @@ public class Db {
     }
 
 
-    public long addEbresztes(String ebresztesideje, String uzenet, int szundiszam, String[] napok, int once) {
-
+    public long addEbresztes(String ebresztesideje, String uzenet, int szundiszam, String[] napok, int once, boolean active) {
+        int act = (active==true)? 1:0;
         SQLiteDatabase dba = dbHelper.getWritableDatabase();
         ContentValues cvs = new ContentValues();
         cvs.put(EBRESZTES_IDEJE, ebresztesideje);
@@ -82,6 +84,7 @@ public class Db {
         cvs.put(SZT, napok[5]);
         cvs.put(V, napok[6]);
         cvs.put(ONCE, once);
+        cvs.put(ACTIVE, act);
         long id = dba.insert(TABLE_NAME, null, cvs);
         dba.close();
         return id;
@@ -100,6 +103,16 @@ public class Db {
     {
         SQLiteDatabase dba = dbHelper.getWritableDatabase();
         return dba.delete(TABLE_NAME, ID + "=" + id, null) > 0;
+    }
+
+    public void updateRow(long dbid,boolean bool)
+    {
+        int id = (int)dbid;
+        SQLiteDatabase dba = dbHelper.getWritableDatabase();
+        ContentValues con = new ContentValues();
+        con.put(ACTIVE,bool);
+        dba.update(TABLE_NAME, con, ID + "=" + id,null);
+        dba.close();
     }
 
 

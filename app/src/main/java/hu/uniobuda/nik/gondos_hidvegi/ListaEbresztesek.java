@@ -125,7 +125,7 @@ public class ListaEbresztesek extends ListFragment {
                 getActivity().getIntent().removeExtra("ujEbresztes");
                 if(newEbresztes!=null)
                 {
-                    db.addEbresztes(newEbresztes.getEbresztesIdeje(), newEbresztes.getUzenet(), newEbresztes.getSzundiSzam(),newEbresztes.getNapok(),newEbresztes.getOnce());
+                    db.addEbresztes(newEbresztes.getEbresztesIdeje(), newEbresztes.getUzenet(), newEbresztes.getSzundiSzam(),newEbresztes.getNapok(),newEbresztes.getOnce(),newEbresztes.isActive());
 
                 }
             }
@@ -151,8 +151,9 @@ public class ListaEbresztesek extends ListFragment {
             {
                 napok[i] = c.getString(4+i);
             }
-            Ebresztes ebresztes = new Ebresztes(false,c.getLong(0),c.getString(1),c.getString(2),c.getInt(3),c.getInt(11));
-            Log.v("dbrecall_id",String.valueOf(ebresztes.getDbID()));
+            boolean active = (c.getInt(12)==1)?true:false;
+            Log.v("ACTÍÍÍÍÍÍÍÍÍVE",String.valueOf(c.getInt(12)));
+            Ebresztes ebresztes = new Ebresztes(active,c.getLong(0),c.getString(1),c.getString(2),c.getInt(3),c.getInt(11));
             ebresztes.napokBeallit(napok);
             ebresztesek.add(ebresztes);
             c.moveToNext();

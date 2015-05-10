@@ -23,6 +23,7 @@ public class EbresztesAdapter extends BaseAdapter {
     private static int requestCode;
     private final List<Ebresztes> ebresztesek;
     ArrayList<PendingIntent> lista = new ArrayList<PendingIntent>();
+    Db db;
 
     public EbresztesAdapter(List<Ebresztes> ebresztesek) {
         this.ebresztesek = ebresztesek;
@@ -72,6 +73,7 @@ public class EbresztesAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, final ViewGroup parent)
     {
+        db = new Db(parent.getContext());
         final Ebresztes currEbresztes = ebresztesek.get(position);
         final ViewHolder holder;
         final AlarmManager alarmManager = (AlarmManager) parent.getContext().getSystemService(Context.ALARM_SERVICE);
@@ -103,11 +105,13 @@ public class EbresztesAdapter extends BaseAdapter {
 
                 if(!currEbresztes.isActive()) {
                     currEbresztes.setActive(true);
+                    db.updateRow(currEbresztes.getDbID(),true);
                     holder.AorM.setImageResource(R.drawable.green);
                     setAlarm(parent.getContext(),currEbresztes,alarmManager,intent);
 
                 }else
                 {
+                    db.updateRow(currEbresztes.getDbID(),false);
                     currEbresztes.setActive(false);
                     holder.AorM.setImageResource(R.drawable.red);
                     removeAlarm(parent.getContext(),currEbresztes,alarmManager,intent);
@@ -218,10 +222,15 @@ public class EbresztesAdapter extends BaseAdapter {
             Calendar cal = Calendar.getInstance();
             int ora = Integer.parseInt(ebresztes.getEbresztesIdeje().substring(0, ebresztes.getEbresztesIdeje().indexOf(":")));
             int perc = Integer.parseInt(ebresztes.getEbresztesIdeje().substring(ebresztes.getEbresztesIdeje().indexOf(":") + 1));
-
             cal.set(Calendar.HOUR_OF_DAY, ora);  //HOUR
             cal.set(Calendar.MINUTE, perc);       //MIN
+            if(cal.getTimeInMillis()<System.currentTimeMillis())
+            {
+                //ha korábbra állítottunk egy ébresztést akkor eltolja egy nappal
+                cal.setTimeInMillis(cal.getTimeInMillis()+86400000);
+            }
             intent.putExtra("szundiszam",ebresztes.getSzundiSzam());
+            intent.putExtra("ebresztesid",ebresztes.getDbID());
             PendingIntent pendingIntent = PendingIntent.getBroadcast(
                     context.getApplicationContext(), (int) ebresztes.getDbID(), intent, 0);
             // tesztre: alarmManager.set(AlarmManager.RTC_WAKEUP,System.currentTimeMillis(),pendingIntent);
@@ -257,6 +266,7 @@ public class EbresztesAdapter extends BaseAdapter {
                         caltobb.setTimeInMillis(caltobb.getTimeInMillis()+604800000);
                     }
                         intent.putExtra("szundiszam",ebresztes.getSzundiSzam());
+                        intent.putExtra("ebresztesid",ebresztes.getDbID());
                         PendingIntent pendingIntent = PendingIntent.getBroadcast(
                                 context.getApplicationContext(), (int) ebresztes.getDbID(), intent, 0);
                         alarmManager.set(AlarmManager.RTC_WAKEUP, caltobb.getTimeInMillis(), pendingIntent);

@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent" android:layout_height="match_parent"
-    android:gravity="bottom"
     android:layout_gravity="center_horizontal"
     android:orientation="vertical">
 
@@ -10,13 +9,14 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:gravity="top">
 
         <TextView
             android:id="@+id/tvSzundiSzam"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="30dp"
+            android:textSize="20dp"
             android:text="Ennyi szundi van még: "
             android:gravity="center"/>
 
@@ -24,7 +24,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Következő ébresztés (percben):"
-            android:textSize="50dp"
+            android:textSize="30dp"
             android:gravity="center"/>
 
         <NumberPicker
@@ -88,12 +88,19 @@
 
     </RelativeLayout>
 
-    <Button
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Szundi"
-        android:id="@+id/btn1megjelenik"
-        android:layout_gravity="bottom"  />
+        android:layout_height="wrap_content">
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Szundi"
+            android:id="@+id/btn1megjelenik"
+            android:layout_alignParentBottom="true"
+            />
+
+    </RelativeLayout>
 
 
 

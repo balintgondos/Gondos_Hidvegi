@@ -48,6 +48,7 @@ public class Megjelenik extends Activity implements SensorEventListener {
     NumberPicker np;
     int npvalue;
     TextView szundiszam;
+    Db db;
 
 
     @Override
@@ -73,6 +74,8 @@ public class Megjelenik extends Activity implements SensorEventListener {
 
       szundiszam = (TextView) findViewById(R.id.tvSzundiSzam);
       szundiszam.setText("Ennyi szundi van még: "+ EbresztoBroadcast.szundi);
+
+      db = new Db(this);
 
       np = (NumberPicker) findViewById(R.id.numberPicker);
         np.post(new Runnable() {
@@ -219,6 +222,8 @@ public class Megjelenik extends Activity implements SensorEventListener {
             if(EbresztoBroadcast.szundi!=0) {
                 myHandler.removeCallbacks(close);
             }
+            db.updateRow(getIntent().getLongExtra("id",0),false);
+            Toast.makeText(getApplicationContext(),"Az ébresztésnek vége!",Toast.LENGTH_SHORT).show();
             mp.release();
             finish();
         }
@@ -231,6 +236,7 @@ public class Megjelenik extends Activity implements SensorEventListener {
     public void onAccuracyChanged(Sensor sensor, int accuracy) {
 
     }
+
 
     public static int randInt(int min, int max) {
 

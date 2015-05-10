@@ -68,11 +68,11 @@ public class Ujebresztes extends Activity {
 
                 String[] nums = new String[21];
                 for(int i=0; i<nums.length; i++) {
-                    nums[i] = Integer.toString(i);
+                    nums[i] = Integer.toString(i+1);
                 }
 
                 np.setMaxValue(20);
-                np.setMinValue(0);
+                np.setMinValue(1);
                 np.setWrapSelectorWheel(true);
                 np.setDisplayedValues(nums);
                 np.setValue(1);
